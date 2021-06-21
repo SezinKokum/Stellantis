@@ -76,7 +76,8 @@ public class Vehicle{
             targetY = this.y + movements[orientationIndex][1];
               
             if ( (targetX > rangeOfMoveX) || (targetY > rangeOfMoveY ) ){
-                System.out.println("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez.");
+                //System.out.println("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez.");
+                throw new java.lang.Error("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez.");
             }
             else{
                 this.x = this.x + movements[orientationIndex][0];
