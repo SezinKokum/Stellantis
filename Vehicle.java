@@ -6,9 +6,9 @@ public class Vehicle{
     private int x; //Hareket alanındaki verilen ilk x konumu.
     private int y; //Hareket alanındaki verilen ilk y konumu.
     private char orientation;//Aracın yön bilgisini tutar.
-    int rangeOfMoveX; //Hareket alanı X mevcut inputta 5.
-    int rangeOfMoveY; //Hareket alanı Y mevcut inputta 5.
-    
+    private int rangeOfMoveX; //Hareket alanı X mevcut inputta 5.
+    private int rangeOfMoveY; //Hareket alanı Y mevcut inputta 5.
+
     char[] directions  = {'N','W','S','E'}; //North,West,South and East. Arabanın dönebileceği yönleri tutan yön array'i.
     
     //                      N       W       S      E
@@ -22,7 +22,7 @@ public class Vehicle{
     //                     \                                              /
     //                                   S - index karşılığı 2
 
-    public Vehicle(String rangeOfMove, String direction, String commands) { //İlk parametre:Aracın konum parametresi(1 2 N) ve İkinci parametre:Aracın hareket edeceği alanı nasıl gezeceği LMLMLMLMM
+    public Vehicle(String rangeOfMove, String direction, String commands,int whichVehicle) { ////İlk parametre:Aracın hareket alanı-İkinci parametre: Aracın konum parametresi 1 2 N-Üçüncü parametre:Aracın hareket edeceği alanı nasıl gezeceği LMLMLMLMM-Dördüncü parametre:Araç No
            
         String[] rangeOfMoves = rangeOfMove.split(" ",2);
         this.rangeOfMoveX = Integer.parseInt(rangeOfMoves[0]);// rangeOfMoves[0] bilgisinde yer alan, 5 değeri rangeOfMoveX e atanır.
@@ -44,11 +44,11 @@ public class Vehicle{
 
         for(int i = 0; i < commands.length(); i++){
             command = commands.charAt(i);
-            move(command);
+            move(command,whichVehicle);
         } 
     }
  
-    public void move(char command){
+    public void move(char command,int whichVehicle){
          
         int orientationIndex = new String(directions).indexOf(this.orientation);//Gelen yön değeri yön bilgilerinin tutulduğu directions arrayinde hangi indexte diye bakılır.
                                                                                 //Ve karşılık gelen index değerine göre hareketi ve yönü belirlenir.
@@ -77,7 +77,7 @@ public class Vehicle{
               
             if ( (targetX > rangeOfMoveX) || (targetY > rangeOfMoveY ) ){
                 //System.out.println("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez.");
-                throw new java.lang.Error("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez.");
+                throw new java.lang.Error("Aracın hareket alanına uymayan bir hareket gerçekleştirilemez. Araç No: " + whichVehicle);
             }
             else{
                 this.x = this.x + movements[orientationIndex][0];
@@ -124,7 +124,7 @@ public class Vehicle{
         List<String>locationArrayList = new ArrayList<String>();
 
         for(int i=0;i<numOfVehicles;i++){
-            Vehicle v1 = new Vehicle(array[0], array[(2*i) + 1], array[(2*i) + 2]);
+            Vehicle v1 = new Vehicle(array[0], array[(2*i) + 1], array[(2*i) + 2],i+1);
             locationArrayList.add(i,v1.getLocation());
         }
         //locationArrayList.forEach(System.out::println); //Araçların son konumu ve yön bilgisinin tutan listenin bilgilerini basar.
